@@ -24,17 +24,7 @@ jobs:
       - name: Run Trivy Config Scan
         id: trivy-scan
         run: |
-          trivy config --config trivy-config.yml . | tee trivy-result.txt
-
-          if [ -f trivy-result.txt ]; then
-            echo "Contents of trivy-result.txt:"
-            while IFS= read -r line; do
-              echo "$line"
-            done < trivy-result.txt          
-          else
-            echo "trivy-result.txt not found!"
-            exit 1
-          fi
+          trivy config --config trivy-config.yml . > trivy-result.txt
 
           results=$(cat trivy-result.txt)
           echo "$results"
@@ -46,8 +36,6 @@ jobs:
             exit 1    
           else
             echo "No vulnerabilities found."
-            results=$(cat trivy-result.txt)
-            echo "Results of Trivy: $results"
             echo "success"
           fi
           
