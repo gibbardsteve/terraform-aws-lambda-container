@@ -24,7 +24,7 @@ jobs:
       - name: Run Trivy Config Scan
         id: trivy-scan
         run: |
-          trivy config --config trivy-config.yml . > trivy-result.txt
+          trivy config --config trivy-config.yml . | tee trivy-result.txt
 
           results=$(cat trivy-result.txt)
           echo "$results"
