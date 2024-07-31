@@ -1,0 +1,31 @@
+name: Trivy Config Scan
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  trivy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget apt-transport-https gnupg lsb-release
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install -y trivy
+
+      - name: Run Trivy Config Scan
+        run: trivy config --format table --config trivy-config.yml .
+
+      - name: Display Trivy Scan Results
+        if: failure()
+        run: |
+          echo "Trivy found vulnerabilities!"
+          exit 1

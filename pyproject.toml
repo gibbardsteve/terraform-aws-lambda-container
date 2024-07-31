@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "terraform-aws-lambda-container"
+version = "0.1.0"
+description = "Example python lambda using container and poetry"
+authors = ["Steve Gibbard  <steve.gibbard@ons.gov.uk>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+boto3 = "^1.34.145"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
