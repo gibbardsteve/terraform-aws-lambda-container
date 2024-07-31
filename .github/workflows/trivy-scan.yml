@@ -24,14 +24,17 @@ jobs:
       - name: Run Trivy Config Scan
         id: trivy-scan
         run: |
-          trivy config --config trivy-config.yml . > trivy-result.txt
-          if grep -iq "FAILURES: 0" trivy-result.txt; then
-            echo "No high or critical vulnerabilities found."
-          else
-            echo "High or critical vulnerabilities found!"
+          cat trivy-result.txt | awk '/Failures: [1-9]/' > fails.txt
+          if [ $(wc -l < fails.txt) -gt 0 ]; then
+            echo "Vulnerabilities found!"
             cat trivy-result.txt
-            exit 1
+            exit 1    
+          else
+            echo "No vulnerabilities found."
+            echo 0
           fi
+
+          cat trivy-result.txt
           
       - name: Display Trivy Scan Results
         if: failure()
