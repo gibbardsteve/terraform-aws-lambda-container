@@ -25,18 +25,20 @@ jobs:
         id: trivy-scan
         run: |
           trivy config --config trivy-config.yml . > trivy-result.txt
-          
+
+          results=$(cat trivy-result.txt)
+
           cat trivy-result.txt | awk '/Failures: [1-9]/' > fails.txt
           if [ $(wc -l < fails.txt) -gt 0 ]; then
             echo "Vulnerabilities found!"
-            cat trivy-result.txt
+            echo "Results of Trivy: $file_contents"
             exit 1    
           else
             echo "No vulnerabilities found."
             echo 0
           fi
 
-          cat trivy-result.txt
+          echo "Results of Trivy: $file_contents"
           
       - name: Display Trivy Scan Results
         if: failure()
