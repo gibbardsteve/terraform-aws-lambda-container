@@ -29,7 +29,6 @@ jobs:
           results=$(cat trivy-result.txt)
           echo "$results"
 
-
           cat trivy-result.txt | awk '/Failures: [1-9]/' > fails.txt
           if [ $(wc -l < fails.txt) -gt 0 ]; then
             echo "Vulnerabilities found!"
@@ -37,9 +36,9 @@ jobs:
             exit 1    
           else
             echo "No vulnerabilities found."
+            echo "Results of Trivy: $results"
+            echo "success"
           fi
-
-          echo "Results of Trivy: $results"
           
       - name: Display Trivy Scan Results
         if: failure()
