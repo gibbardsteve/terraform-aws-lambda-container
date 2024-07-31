@@ -1,0 +1,20 @@
+# trivy-config.yaml
+# Ignore LOW level warnings
+---
+severity:
+  - MEDIUM
+  - HIGH
+  - CRITICAL
+
+#output:
+#  format: json
+
+# Optionally, ignore unfixed vulnerabilities
+# ignoreUnfixed: true
+
+# Optionally, specify directories or files to scan
+# scanPaths:
+#  - .
+
+# Optionally, set other options
+# debug: true
