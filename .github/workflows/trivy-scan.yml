@@ -27,6 +27,8 @@ jobs:
           trivy config --config trivy-config.yml . > trivy-result.txt
 
           results=$(cat trivy-result.txt)
+          echo "$results"
+
 
           cat trivy-result.txt | awk '/Failures: [1-9]/' > fails.txt
           if [ $(wc -l < fails.txt) -gt 0 ]; then
