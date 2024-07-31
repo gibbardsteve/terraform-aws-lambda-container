@@ -36,6 +36,7 @@ jobs:
             exit 1    
           else
             echo "No vulnerabilities found."
+            results=$(cat trivy-result.txt)
             echo "Results of Trivy: $results"
             echo "success"
           fi
