@@ -26,6 +26,14 @@ jobs:
         run: |
           trivy config --config trivy-config.yml . | tee trivy-result.txt
 
+          if [ -f trivy-result.txt ]; then
+            echo "Contents of trivy-result.txt:"
+            cat trivy-result.txt
+          else
+            echo "trivy-result.txt not found!"
+            exit 1
+          fi
+
           results=$(cat trivy-result.txt)
           echo "$results"
 
